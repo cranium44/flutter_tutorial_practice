@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial_practice/screens/home.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -10,7 +10,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home()
+      home: Scaffold(
+        appBar: AppBar(title: Text("data"),),
+        body: Center(child: Text("data"),),
+      )
     );
   }
 }
