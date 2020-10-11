@@ -20,7 +20,7 @@ class TransactionItem extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(5, 5, 15, 5),
               padding: EdgeInsets.all(10),
               child: Text(
-                "N " + transaction.ammount.toString(),
+                "\u20A6 ${transaction.ammount}" ,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
