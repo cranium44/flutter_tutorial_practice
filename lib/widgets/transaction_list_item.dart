@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial_practice/models/transaction.dart';
+import 'package:intl/intl.dart';
 
 class TransactionItem extends StatelessWidget {
   final Transaction transaction;
@@ -47,7 +48,7 @@ class TransactionItem extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    transaction.date.toString(),
+                    DateFormat.yMMMEd().format(transaction.date),
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w300,
