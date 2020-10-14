@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial_practice/models/transaction.dart';
+import 'package:intl/intl.dart';
 
 class TransactionItem extends StatelessWidget {
   final Transaction transaction;
@@ -20,7 +21,7 @@ class TransactionItem extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(5, 5, 15, 5),
               padding: EdgeInsets.all(10),
               child: Text(
-                "N " + transaction.ammount.toString(),
+                "\u20A6 ${transaction.ammount.toStringAsFixed(2)}" ,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -38,8 +39,7 @@ class TransactionItem extends StatelessWidget {
                   child: Text(
                     transaction.title,
                     style: TextStyle(
-                      fontSize: 14,
-                      fontStyle: FontStyle.italic,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -47,13 +47,13 @@ class TransactionItem extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    transaction.date.toString(),
+                    DateFormat.yMMMEd().format(transaction.date),
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w300,
                     ),
                   ),
-                  margin: EdgeInsets.symmetric(vertical: 8),
+                  margin: EdgeInsets.symmetric(vertical: 4),
                 )
               ],
             )
