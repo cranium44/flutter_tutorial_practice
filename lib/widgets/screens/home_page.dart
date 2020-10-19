@@ -5,13 +5,11 @@ import '../new_transaction.dart';
 import '../user_transaction.dart';
 
 class HomePage extends StatefulWidget {
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-
   final List<Transaction> transactions = [
     Transaction(
         id: "t1", title: "Biscuits", ammount: 150.00, date: DateTime.now()),
@@ -32,14 +30,22 @@ class _HomePageState extends State<HomePage> {
       context: ctx,
       builder: (_) {
         return GestureDetector(
-          onTap: () {
-            
-          },
+          onTap: () {},
           behavior: HitTestBehavior.opaque,
           child: NewTransaction(_addTransaction),
         );
       },
     );
+  }
+
+  List<Transaction> get recentTransactions {
+    return transactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
   }
 
   @override
