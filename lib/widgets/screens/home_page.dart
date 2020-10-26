@@ -3,6 +3,7 @@ import 'package:flutter_tutorial_practice/models/transaction.dart';
 
 import '../new_transaction.dart';
 import '../user_transaction.dart';
+import '../chart.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -60,18 +61,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Container(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Card(
-              child: Text("chart"),
-              color: Colors.blueAccent,
-              shadowColor: Colors.black,
-            ),
-            Transactions(transactions)
-          ],
+      body: SingleChildScrollView(
+              child: Container(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Chart(transactions),
+              Transactions(transactions)
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

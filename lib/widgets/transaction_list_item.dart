@@ -17,20 +17,25 @@ class TransactionItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(5, 5, 15, 5),
-              padding: EdgeInsets.all(10),
-              child: Text(
-                "\u20A6 ${transaction.ammount.toStringAsFixed(2)}" ,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
+            Flexible(
+              fit: FlexFit.loose,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(5, 5, 15, 5),
+                padding: EdgeInsets.all(10),
+                child: FittedBox(
+                  child: Text(
+                    "\u20A6 ${transaction.ammount.toStringAsFixed(2)}",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
                 ),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.cyanAccent),
+                    borderRadius: BorderRadius.circular(50)),
               ),
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.cyanAccent),
-                  borderRadius: BorderRadius.circular(50)),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
