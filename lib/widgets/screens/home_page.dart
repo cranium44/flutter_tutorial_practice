@@ -26,6 +26,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      transactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   void beginAddTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
@@ -62,13 +68,13 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SingleChildScrollView(
-              child: Container(
+        child: Container(
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Chart(transactions),
-              Transactions(transactions)
+              Transactions(transactions, _deleteTransaction),
             ],
           ),
         ),
