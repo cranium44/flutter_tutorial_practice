@@ -13,14 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Transaction> transactions = [
-    Transaction(
-        id: "t1", title: "Biscuits", ammount: 150.00, date: DateTime.now()),
-    Transaction(
-        id: "t2", title: "Offering", ammount: 500.00, date: DateTime.now()),
-    Transaction(
-        id: "t3", title: "Jumper shorts", ammount: 750.00, date: DateTime.now())
-  ];
+  final List<Transaction> transactions = [];
 
   bool _showChart = false;
 
@@ -130,10 +123,12 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Platform.isIOS ? Container() : FloatingActionButton(
-        onPressed: () => beginAddTransaction(context),
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () => beginAddTransaction(context),
+              child: Icon(Icons.add),
+            ),
     );
   }
 }
