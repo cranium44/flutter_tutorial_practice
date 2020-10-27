@@ -47,7 +47,7 @@ class Chart extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: transactionsPerDay.map((tx) {
               return Flexible(
                 fit: FlexFit.tight,

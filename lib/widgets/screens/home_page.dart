@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial_practice/models/transaction.dart';
 
@@ -11,14 +13,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Transaction> transactions = [
-    Transaction(
-        id: "t1", title: "Biscuits", ammount: 150.00, date: DateTime.now()),
-    Transaction(
-        id: "t2", title: "Offering", ammount: 500.00, date: DateTime.now()),
-    Transaction(
-        id: "t3", title: "Jumper shorts", ammount: 750.00, date: DateTime.now())
-  ];
+  final List<Transaction> transactions = [];
+
+  bool _showChart = false;
 
   _addTransaction(Transaction tr) {
     setState(() {
@@ -45,6 +42,49 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  List<Widget> _buildLandscapeContent(
+      MediaQueryData mediaQuery, AppBar appBar, Widget txList) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("ShowChart"),
+          Switch(
+            value: _showChart,
+            onChanged: (val) {
+              setState(() {
+                _showChart = val;
+              });
+            },
+          ),
+        ],
+      ),
+      _showChart
+          ? Container(
+              height: (mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.65,
+              child: Chart(transactions),
+            )
+          : txList,
+    ];
+  }
+
+  List<Widget> _buildPortraitContents(
+      MediaQueryData mediaQuery, AppBar appBar, Widget txList) {
+    return [
+      Container(
+        height: (mediaQuery.size.height -
+                appBar.preferredSize.height -
+                mediaQuery.padding.top) *
+            0.25,
+        child: Chart(transactions),
+      ),
+      txList,
+    ];
+  }
+
   List<Transaction> get recentTransactions {
     return transactions.where((tx) {
       return tx.date.isAfter(
@@ -57,33 +97,48 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
+
+    final _appBar = AppBar(
+      title: Text("Transactions"),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => beginAddTransaction(context),
+        ),
+      ],
+    );
+
+    final txList = Container(
+      height: (mediaQuery.size.height -
+              _appBar.preferredSize.height -
+              mediaQuery.padding.top) *
+          0.75,
+      child: Transactions(transactions, _deleteTransaction),
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Transactions"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => beginAddTransaction(context),
-          ),
-        ],
-      ),
+      appBar: _appBar,
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Chart(transactions),
-              Transactions(transactions, _deleteTransaction),
-            ],
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: isLandscape
+                ? _buildLandscapeContent(mediaQuery, _appBar, txList)
+                : _buildPortraitContents(mediaQuery, _appBar, txList),
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => beginAddTransaction(context),
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () => beginAddTransaction(context),
+              child: Icon(Icons.add),
+            ),
     );
   }
 }

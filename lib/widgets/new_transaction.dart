@@ -43,59 +43,73 @@ class _NewTransactionState extends State<NewTransaction> {
       lastDate: DateTime.now(),
     ).then((value) {
       setState(() {
-      if (value == null) return;
-      _date = value;
+        if (value == null) return;
+        _date = value;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          TextField(
-            controller: _titleController,
-            onSubmitted: (value) => _submitData(),
-            decoration: InputDecoration(
-                hintText: "Enter expense title", labelText: "Title"),
-          ),
-          TextField(
-            controller: _amountController,
-            onSubmitted: (value) => _submitData(),
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-                hintText: "Enter ammount", labelText: "Ammount"),
-          ),
-          Container(
-            height: 70,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(_date == null ? "No date selected": "Picked date: ${DateFormat.yMMMd().format(_date)}"),
-                FlatButton(
-                  onPressed: () => _presentDatePicker(),
-                  child: Text(
-                    "Choose Date",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  textColor: Theme.of(context).primaryColor,
-                ),
-              ],
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            TextField(
+              controller: _titleController,
+              onSubmitted: (value) => _submitData(),
+              decoration: InputDecoration(
+                  hintText: "Enter expense title", labelText: "Title"),
             ),
-          ),
-          RaisedButton(
-            onPressed: _submitData,
-            child: Text("Add transaction"),
-            color: Theme.of(context).primaryColor,
-            textColor: Theme.of(context).textTheme.button.color,
-          )
-        ],
+            TextField(
+              controller: _amountController,
+              onSubmitted: (value) => _submitData(),
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  hintText: "Enter ammount", labelText: "Ammount"),
+            ),
+            Container(
+              height: 70,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(_date == null
+                      ? "No date selected"
+                      : "Picked date: ${DateFormat.yMMMd().format(_date)}"),
+                  FlatButton(
+                    onPressed: () => _presentDatePicker(),
+                    child: Text(
+                      "Choose Date",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    textColor: Theme.of(context).primaryColor,
+                  ),
+                ],
+              ),
+            ),
+            RaisedButton(
+              onPressed: _submitData,
+              child: Text(
+                "Add transaction",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+            )
+          ],
+        ),
       ),
     );
   }
