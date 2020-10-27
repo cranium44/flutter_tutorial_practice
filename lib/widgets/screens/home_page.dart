@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial_practice/models/transaction.dart';
 
@@ -59,8 +61,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
 
     final _appBar = AppBar(
       title: Text("Transactions"),
@@ -73,9 +76,9 @@ class _HomePageState extends State<HomePage> {
     );
 
     final txList = Container(
-      height: (MediaQuery.of(context).size.height -
+      height: (mediaQuery.size.height -
               _appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top) *
+              mediaQuery.padding.top) *
           0.75,
       child: Transactions(transactions, _deleteTransaction),
     );
@@ -103,27 +106,31 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-              if(!isLandscape) Container(
-                height: (MediaQuery.of(context).size.height -
-                        _appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.25,
-                child: Chart(transactions),
-              ),
-              if(!isLandscape) txList,
-              if(isLandscape) _showChart ? Container(
-                height: (MediaQuery.of(context).size.height -
-                        _appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.65,
-                child: Chart(transactions),
-              ) : txList
+              if (!isLandscape)
+                Container(
+                  height: (mediaQuery.size.height -
+                          _appBar.preferredSize.height -
+                          mediaQuery.padding.top) *
+                      0.25,
+                  child: Chart(transactions),
+                ),
+              if (!isLandscape) txList,
+              if (isLandscape)
+                _showChart
+                    ? Container(
+                        height: (mediaQuery.size.height -
+                                _appBar.preferredSize.height -
+                                mediaQuery.padding.top) *
+                            0.65,
+                        child: Chart(transactions),
+                      )
+                    : txList
             ],
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: Platform.isIOS ? Container() : FloatingActionButton(
         onPressed: () => beginAddTransaction(context),
         child: Icon(Icons.add),
       ),

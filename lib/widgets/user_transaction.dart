@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tutorial_practice/models/transaction.dart';
 import 'package:intl/intl.dart';
 
-
 class Transactions extends StatelessWidget {
   final List<Transaction> transactions;
   final Function _deleteTx;
@@ -54,13 +53,22 @@ class Transactions extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        _deleteTx(transactions[index].id);
-                      },
-                      color: Theme.of(context).errorColor,
-                    ),
+                    trailing: MediaQuery.of(context).size.width > 450
+                        ? FlatButton.icon(
+                            onPressed: () {
+                              _deleteTx(transactions[index].id);
+                            },
+                            icon: Icon(Icons.delete),
+                            label: Text("Delete"),
+                            textColor: Theme.of(context).errorColor,
+                          )
+                        : IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _deleteTx(transactions[index].id);
+                            },
+                            color: Theme.of(context).errorColor,
+                          ),
                   ),
                 );
               },
